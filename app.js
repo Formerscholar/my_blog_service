@@ -4,6 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 
 var usersRouter = require('./routes/users');
+var articleRouter = require('./routes/article');
 
 var app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/users', usersRouter);
+app.use('/article', articleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
