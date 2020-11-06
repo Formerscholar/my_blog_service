@@ -6,9 +6,7 @@ const { Send } = require('../utils')
 /* GET users listing. */
 router.get('/getlist', [getlist], function (req, res, next) {
   const { data } = req
-  data
-    ? res.json(Send({ data }))
-    : res.json(Send({ code: 300}))
+  data ? res.json(Send({ data })) : res.json(Send({ code: 300 }))
 })
 
 module.exports = router

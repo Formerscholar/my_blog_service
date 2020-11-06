@@ -23,8 +23,11 @@ const randomToken = () => {
 
 const outtime = 30 * 60 * 1000
 
+const paging = 15
+
 module.exports = {
   Send,
   randomToken,
-  outtime
+  outtime,
+  paging
 }
