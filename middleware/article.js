@@ -16,6 +16,10 @@ module.exports = {
             model: db.User,
             attributes: ['id', 'nickname', 'avatar', 'gender'],
           },
+          {
+            model: db.comment,
+            attributes: ['id', 'content', 'userId', 'createdAt','updatedAt'],
+          },
         ],
         order: [['updatedAt', 'DESC']],
         offset: (page - 1) * paging,

@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Article.belongsTo(models.User, {
         foreignKey:'user_id'
       });
+      models.Article.hasMany(models.comment)
     }
   };
   Article.init({
