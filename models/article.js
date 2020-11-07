@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.Article.belongsTo(models.Category, {
-        foreignKey:'category_id'
+        foreignKey:'CategoryId'
       });
       models.Article.belongsTo(models.User, {
-        foreignKey:'user_id'
+        foreignKey:'UserId'
       });
       models.Article.hasMany(models.comment)
     }
@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     synopsis: DataTypes.STRING,
     content: DataTypes.TEXT,
-    category_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER
+    CategoryId: DataTypes.INTEGER,
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Article',

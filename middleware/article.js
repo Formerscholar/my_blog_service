@@ -18,7 +18,13 @@ module.exports = {
           },
           {
             model: db.comment,
-            attributes: ['id', 'content', 'userId', 'createdAt','updatedAt'],
+            attributes: ['id', 'content', 'userId', 'createdAt', 'updatedAt'],
+            include: [
+              {
+                model: db.User,
+                attributes: ['id', 'nickname', 'avatar', 'gender'],
+              }
+            ]
           },
         ],
         order: [['updatedAt', 'DESC']],
