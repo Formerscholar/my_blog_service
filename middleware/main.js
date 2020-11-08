@@ -5,6 +5,9 @@ const { Send } = require('../utils')
 module.exports = {
   async verificationToken(req, res, next) {
     const token = req.body.token || req.query.token
+    if (!token) {
+      res.send(Send({ code: 777, data: 'token错误' }))
+    }
     try {
       const data = await db.User.findOne({
         where: {
