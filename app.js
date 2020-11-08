@@ -5,6 +5,8 @@ var logger = require('morgan')
 const { verificationToken } = require('./middleware/main')
 var usersRouter = require('./routes/users')
 var articleRouter = require('./routes/article')
+var categoryRouter = require('./routes/category')
+var commentRouter = require('./routes/comment')
 
 var app = express()
 
@@ -14,6 +16,8 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/users', usersRouter)
 app.use('/article', [verificationToken, articleRouter])
+app.use('/category', [verificationToken, categoryRouter])
+app.use('/comment', [verificationToken, commentRouter])
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

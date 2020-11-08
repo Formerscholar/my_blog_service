@@ -22,4 +22,44 @@ module.exports = {
     }
     next()
   },
+  async userRegister(req, res, next) {
+    const { username, password, email, nickname, avatar, gender } = req.body
+    try {
+      const data = await db.User.create({
+        username,
+        password,
+        email,
+        nickname,
+        avatar,
+        gender,
+      })
+      req.data = data
+    } catch (error) {
+      req.data = error
+    }
+    next()
+  },
+  async updateInfo(req, res, next) {
+    const { id, username, email, nickname, avatar } = req.body
+    try {
+      const data = await db.User.update(
+        {
+          email,
+          nickname,
+          avatar,
+        },
+        {
+          where: {
+            id,
+            username,
+          },
+          limit:1
+        }
+      )
+      req.data = data
+    } catch (error) {
+      req.data = error
+    }
+    next()
+  },
 }
