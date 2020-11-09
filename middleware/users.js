@@ -40,20 +40,21 @@ module.exports = {
     next()
   },
   async updateInfo(req, res, next) {
-    const { id, username, email, nickname, avatar } = req.body
+    const { id, username, email, nickname } = req.body
+    const { uploadURL } = req
     try {
       const data = await db.User.update(
         {
           email,
           nickname,
-          avatar,
+          avatar: uploadURL,
         },
         {
           where: {
             id,
             username,
           },
-          limit:1
+          limit: 1,
         }
       )
       req.data = data
