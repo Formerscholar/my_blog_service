@@ -21,6 +21,25 @@ const upload = multer({
   },
 })
 
+const uploadimg = multer({
+  dest: './static/uploadimg',
+  limits: {
+    fileSize: 1024 * 1024 * 2,
+  },
+})
+
+
+app.post('/?*', uploadimg.single('uploadimg'), (req, res, nest) => {
+  let { file } = req
+  if (file) {
+    let extname = path.extname(file.originalname)
+    fs.renameSync(file.path, file.path + extname)
+    req.uploadURL = '/upload/' + file.filename + extname
+  }
+  nest()
+})
+
+
 app.post('/users?*', upload.single('avatar'), (req, res, nest) => {
   let { file } = req
   if (file) {
