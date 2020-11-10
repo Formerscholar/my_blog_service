@@ -4,7 +4,7 @@ var path = require('path')
 var fs = require('fs')
 var logger = require('morgan')
 const multer = require('multer')
-
+const { Send } = require('./utils')
 const { verificationToken } = require('./middleware/main')
 
 var usersRouter = require('./routes/users')
@@ -28,17 +28,15 @@ const uploadimg = multer({
   },
 })
 
-
-app.post('/?*', uploadimg.single('uploadimg'), (req, res, nest) => {
+// 上传图片
+app.post('/uploadimg', uploadimg.single('uploadimg'), (req, res, nest) => {
   let { file } = req
   if (file) {
     let extname = path.extname(file.originalname)
     fs.renameSync(file.path, file.path + extname)
-    req.uploadURL = '/upload/' + file.filename + extname
+    res.json(Send({ data: '/upload/' + file.filename + extname }))
   }
-  nest()
 })
-
 
 app.post('/users?*', upload.single('avatar'), (req, res, nest) => {
   let { file } = req
@@ -50,18 +48,14 @@ app.post('/users?*', upload.single('avatar'), (req, res, nest) => {
   nest()
 })
 
-
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
 
 app.use('/users', usersRouter)
 app.use('/article', [verificationToken, articleRouter])
 app.use('/category', [verificationToken, categoryRouter])
 app.use('/comment', [verificationToken, commentRouter])
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
