@@ -14,7 +14,7 @@ const loginRedis = async (req, res, next) => {
   next()
 }
 
-// -----------------------------------
+// ----- ↑ = middleware  ↓ = hookfunc -----
 
 const updateInfo = async ({ id, username, email, nickname,uploadURL }) => {
   const redisData = await set('userData' + id, {
