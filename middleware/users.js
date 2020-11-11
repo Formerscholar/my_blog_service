@@ -1,4 +1,5 @@
 const db = require('../models')
+const { updateInfo } = require('../redis/users')
 const { randomToken, outtime } = require('../utils')
 
 module.exports = {
@@ -43,6 +44,7 @@ module.exports = {
     const { id, username, email, nickname } = req.body
     const { uploadURL } = req
     try {
+      updateInfo({ id, username, email, nickname, uploadURL })
       const data = await db.User.update(
         {
           email,
