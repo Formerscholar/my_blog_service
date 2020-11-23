@@ -1,31 +1,17 @@
 const db = require('../models')
-const { outtime } = require('../utils')
 const { Send } = require('../utils')
+const { get } = require('../redis')
 
 module.exports = {
   async verificationToken(req, res, next) {
-    const token = req.body.token || req.query.token
-    if (!token) {
-      res.send(Send({ code: 777, data: 'token错误' }))
+    const redisData = await get(req.signedCookies.id)
+    if (
+      req.signedCookies.token === redisData.token &&
+      redisData.outtimes > ~~(new Date().getTime() / 1000)
+    ) {
+      next()
+    } else {
+      res.send(Send({ code: 777, data: 'cookie错误或登录过期' }))
     }
-    try {
-      const data = await db.User.findOne({
-        where: {
-          token,
-        },
-        limit: 1,
-      })
-      if (data && data.outtime > new Date().getTime()) {
-        data.update({
-          outtime: new Date().getTime() + outtime,
-        })
-        req.data = data
-      } else {
-        res.send(Send({ code: 777, data: 'token错误或登录过期' }))
-      }
-    } catch (error) {
-      req.data = error
-    }
-    next()
   },
 }

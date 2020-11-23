@@ -13,10 +13,28 @@ module.exports = {
         },
         limit: 1,
       })
-      data.update({
-        token: randomToken(),
-        outtime: new Date().getTime() + outtime,
-      })
+      if (data) {
+        const outtimes = ~~(new Date().getTime() / 1000) + outtime
+        const token = randomToken()
+        req.outtimes = outtimes
+        req.token = token
+        res.cookie('id', data.id, {
+          domain: 'localhost',
+          secure: false,
+          expires: outtimes,
+          maxAge: outtimes,
+          httpOnly: true,
+          signed: true,
+        })
+        res.cookie('token', token, {
+          domain: 'localhost',
+          secure: false,
+          expires: outtimes,
+          maxAge: outtimes,
+          httpOnly: true,
+          signed: true,
+        })
+      }
       req.data = data
     } catch (error) {
       req.data = error

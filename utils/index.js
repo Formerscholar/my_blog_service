@@ -21,13 +21,16 @@ const randomToken = () => {
   return pwd
 }
 
-const outtime = 30 * 60 * 1000
+const outtime = 60 * 60 * 24 * 7
 
 const paging = 15
+
+const encryption = 'chad59068510'
 
 module.exports = {
   Send,
   randomToken,
   outtime,
-  paging
+  paging,
+  encryption,
 }

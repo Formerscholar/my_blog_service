@@ -1,11 +1,13 @@
 var createError = require('http-errors')
 var express = require('express')
+var cookieParser = require('cookie-parser')
 var path = require('path')
 var fs = require('fs')
 var logger = require('morgan')
 const multer = require('multer')
 const { Send } = require('./utils')
 const { verificationToken } = require('./middleware/main')
+const { encryption } = require('./utils')
 
 var usersRouter = require('./routes/users')
 var articleRouter = require('./routes/article')
@@ -51,6 +53,7 @@ app.post('/users?*', upload.single('avatar'), (req, res, nest) => {
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser(encryption))
 
 app.use('/users', usersRouter)
 app.use('/article', [verificationToken, articleRouter])
