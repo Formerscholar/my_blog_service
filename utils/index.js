@@ -21,7 +21,7 @@ const randomToken = () => {
   return pwd
 }
 
-const outtime = 60 * 60 * 24 * 7
+const outtime = 1000 * 60 * 60 * 24 * 7
 
 const paging = 15
 

@@ -14,15 +14,16 @@ module.exports = {
         limit: 1,
       })
       if (data) {
-        const outtimes = ~~(new Date().getTime() / 1000) + outtime
+        const layTime = new Date().getTime() + outtime
+        const outtimes = new Date(layTime).toUTCString()
         const token = randomToken()
-        req.outtimes = outtimes
+        req.outtimes = layTime
         req.token = token
         res.cookie('id', data.id, {
           domain: 'localhost',
           secure: false,
           expires: outtimes,
-          maxAge: outtimes,
+          maxAge: outtime,
           httpOnly: true,
           signed: true,
         })
@@ -30,7 +31,7 @@ module.exports = {
           domain: 'localhost',
           secure: false,
           expires: outtimes,
-          maxAge: outtimes,
+          maxAge: outtime,
           httpOnly: true,
           signed: true,
         })
