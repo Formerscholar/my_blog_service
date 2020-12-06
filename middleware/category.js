@@ -46,4 +46,15 @@ module.exports = {
     }
     next()
   },
+  async delectCate(req, res, next) {
+    const { id } = req.body
+    const data = await db.Category.destroy({
+      where: {
+        id: id,
+      },
+      limit: 1,
+    })
+    req.data = data
+    next()
+  },
 }

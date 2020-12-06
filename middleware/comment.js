@@ -32,12 +32,12 @@ module.exports = {
     next()
   },
   async add(req, res, next) {
-    let { ArticleId, content, UserId } = req.body
+    let { ArticleId, content } = req.body
     try {
       const data = await db.comment.create({
         ArticleId,
         content,
-        UserId,
+        UserId: req.signedCookies.id,
       })
       req.data = data
     } catch (error) {
@@ -46,12 +46,12 @@ module.exports = {
     next()
   },
   async deleteItem(req, res, next) {
-    let { id , UserId } = req.query
+    let { id } = req.query
     try {
       const data = await db.comment.destroy({
         where: {
           id,
-          UserId
+          UserId: req.signedCookies.id,
         },
         limit: 1,
       })

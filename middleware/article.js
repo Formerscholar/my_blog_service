@@ -55,14 +55,14 @@ module.exports = {
     next()
   },
   async addItem(req, res, next) {
-    let { title, synopsis, content, CategoryId, UserId } = req.body
+    let { title, synopsis, content, CategoryId } = req.body
     try {
       const data = await db.Article.create({
         title,
         synopsis,
         content,
         CategoryId,
-        UserId,
+        UserId: req.signedCookies.id,
       })
       req.data = data
     } catch (error) {
@@ -71,10 +71,10 @@ module.exports = {
     next()
   },
   async updateItem(req, res, next) {
-    let { id, title, synopsis, content, CategoryId, UserId } = req.body
+    let { id, title, synopsis, content, CategoryId } = req.body
     try {
       const data = await db.Article.update(
-        { title, synopsis, content, CategoryId, UserId },
+        { title, synopsis, content, CategoryId },
         {
           where: {
             id,
